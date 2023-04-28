@@ -1,10 +1,8 @@
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-
-const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
   return (
-    <div>Hello World!!!!!</div>
+    <div className=" bg-slate-300 h-screen overflow-hidden">
+      <p className=" font-semibold text-lg mt-20 ml-10">Trending</p>
+    </div>
   )
 }
