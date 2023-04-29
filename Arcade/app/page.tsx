@@ -3,7 +3,7 @@
 import { useState } from "react"
 
 export default function Home() {
-  const [user,setuser]=useState([])
+  const [user, setuser] = useState<Array<{ _id: string, name: string }>>([]);
 
   async function getusers(){
     const f_data= await fetch("/api/main",{method:"GET"})
