@@ -59,7 +59,7 @@ export default function SecondryLayout({
   }
   return (
     <div className=" flex">
-      <div className=" bg-[#4B0082]  pl-12 h-screen pt-14 text-xl font-bold">
+      <div className=" bg-[#4B0082]  pl-12 min-h-screen pt-14 text-xl font-bold">
         <div className="flex flex-col w-56 items-start ">
           <Link
             className={linkData.includes("dashboard") ? active : inactive}

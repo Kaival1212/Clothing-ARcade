@@ -33,6 +33,13 @@ export default function products() {
   const [p_cat, set_p_cat] = useState("");
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
+  const set_ev_null=()=>{
+    set_p_name("");
+    set_p_dec("");
+    set_p_price(0);
+    set_p_cat("");
+    setImageUrls([])
+  }
   // useEffect hook is used to make an API call to the server and send the form data
   useEffect(() => {
     const sendData = async () => {
@@ -41,7 +48,8 @@ export default function products() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form_data),
       });
-      console.log(await response.json());
+      const res = await response.status
+      res === 200 ? set_ev_null() : console.error(await response.json());
     };
 
     sendData(); // call the API function
@@ -105,7 +113,6 @@ export default function products() {
 
   async function return_data(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(p_name);
     set_form_data((prevState) => ({
       ...prevState,
       product_id: uuid,
@@ -171,6 +178,7 @@ export default function products() {
           accept="image/png, image/jpeg"
           onChange={handleImageChange}
           multiple
+          value=""
         ></input>
         <div className=" flex gap-2">
           {imageUrls &&
