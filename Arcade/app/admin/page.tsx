@@ -35,7 +35,7 @@ export default function Home() {
 
   // If user is authenticated, redirect to the admin home page
   if (user){
-    router.push('/admin/Home')
+    router.push('/admin/home')
   }
 
   // Otherwise, show the login form

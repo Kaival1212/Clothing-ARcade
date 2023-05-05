@@ -2,3 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
+.pri-input {
+    @apply rounded-lg text-black h-auto pb-10 pl-2;
+}
