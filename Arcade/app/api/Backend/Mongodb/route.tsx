@@ -1,6 +1,6 @@
 // Importing necessary packages and modules
 import { NextRequest, NextResponse } from 'next/server';
-import { MongoClient } from 'mongodb';
+import { MongoClient, ObjectId } from 'mongodb';
 
 // Defining an asynchronous function to handle HTTP POST requests
 export async function POST(req: Request) {
@@ -35,9 +35,29 @@ export async function GET() {
 
     try {
         await client.connect(); // Connecting to the MongoDB database
-        const db = await client.db("ARclothing"); // Selecting the 'ARclothing' database
-        const col = await db.collection("products"); // Selecting the 'products' collection
+        const db =  client.db("ARclothing"); // Selecting the 'ARclothing' database
+        const col =  db.collection("products"); // Selecting the 'products' collection
         const data = await col.find().toArray(); // Fetching all documents from the collection and converting them to an array
+        return NextResponse.json(data); // Returning a JSON response with the fetched data
+    } catch (error) {
+        return NextResponse.json({ error: "error" }); // Returning a JSON response with an error message if an error occurs
+    } finally {
+        await client.close(); // Closing the MongoDB client connection
+    }
+}
+
+export async function PUT(req:Request){
+    const connectionString = process.env.MONGODB_URI || ''; // Getting the MongoDB connection string from the environment variables
+    const client = new MongoClient(connectionString);
+    const id = await req.json()
+ 
+
+    try {
+        await client.connect(); // Connecting to the MongoDB database
+        const db =  client.db("ARclothing"); // Selecting the 'ARclothing' database
+        const col =  db.collection("products"); // Selecting the 'products' collection
+        const query = { _id: new ObjectId(id) };
+        const data = await col.findOne(query) // Fetching all documents from the collection and converting them to an array
         return NextResponse.json(data); // Returning a JSON response with the fetched data
     } catch (error) {
         return NextResponse.json({ error: "error" }); // Returning a JSON response with an error message if an error occurs

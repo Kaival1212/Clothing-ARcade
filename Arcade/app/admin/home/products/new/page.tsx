@@ -193,14 +193,14 @@ export default function products() {
             ))}
         </div>
         <button
-          className="mt-4 bg-pri text-white w-24 rounded-lg"
+          className="pri-button mt-4"
           onClick={deleteimage}
         >
           delete
         </button>
         <button
           type="submit"
-          className="mt-4 bg-pri text-white w-24 rounded-lg"
+          className="pri-button mt-4"
         >
           Save
         </button>

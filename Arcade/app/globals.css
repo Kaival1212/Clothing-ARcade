@@ -5,3 +5,7 @@
 .pri-input {
     @apply rounded-lg text-black h-auto pb-10 pl-2;
 }
+
+.pri-button {
+    @apply  bg-pri text-white w-24 rounded-lg;
+}
