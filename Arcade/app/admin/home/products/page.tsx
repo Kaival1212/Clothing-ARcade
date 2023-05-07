@@ -14,6 +14,7 @@ export default function products() {
       product_price: number;
       product_category: string;
       product_images: string[];
+      product_id:string;
     }[]
   >([]);
 
@@ -68,7 +69,7 @@ export default function products() {
                   />
                 ))} */}
               </div>
-              <Link href={`admin/home/products/edit/${product._id}`}>
+              <Link href={`admin/home/products/edit/${product.product_id}`}>
                 <button className="pri-button mt-4">edit</button>
               </Link>
               <button className=" pri-button  mb-8 mt-4">delete</button>

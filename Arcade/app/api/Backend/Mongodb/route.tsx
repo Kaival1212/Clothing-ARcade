@@ -11,20 +11,20 @@ export async function POST(req: Request) {
         return NextResponse.json("error no data", { status: 406 }) // Returning a JSON response with a 406 status code if product_id is empty
     } else {
         // Checking if the product_images array in the request data is empty
-        if (data.product_images.length == 0) {
+        if (!data.product_images || data.product_images.length == 0) {
             return NextResponse.json("error no images", { status: 406 }) // Returning a JSON response with a 406 status code if product_images is empty
         } else {
-            // Connecting to the MongoDB database and inserting the request data into the 'products' collection
+            // Connecting to the MongoDB database and inserting/updating the request data into the 'products' collection
             const connectionString = process.env.MONGODB_URI || ''; // Getting the MongoDB connection string from the environment variables
             const client = new MongoClient(connectionString);
             await client.connect(); // Connecting to the MongoDB database
             const db = client.db("ARclothing"); // Selecting the 'ARclothing' database
             const col = db.collection("products"); // Selecting the 'products' collection
-            await col.insertOne(data); // Inserting the request data into the collection
+            await col.updateOne({ _id: data._id }, { $set: data }, { upsert: true }); // Updating/Inserting the request data into the collection
         }
         
-        // Returning a JSON response with a 200 status code if the data was successfully added to the collection
-        return NextResponse.json('data added successfully', { status: 200 });
+        // Returning a JSON response with a 200 status code if the data was successfully added/updated to the collection
+        return NextResponse.json('data added/updated successfully', { status: 200 });
     }
 }
 
@@ -56,7 +56,8 @@ export async function PUT(req:Request){
         await client.connect(); // Connecting to the MongoDB database
         const db =  client.db("ARclothing"); // Selecting the 'ARclothing' database
         const col =  db.collection("products"); // Selecting the 'products' collection
-        const query = { _id: new ObjectId(id) };
+        console.log(id)
+        const query = { product_id: id };
         const data = await col.findOne(query) // Fetching all documents from the collection and converting them to an array
         return NextResponse.json(data); // Returning a JSON response with the fetched data
     } catch (error) {
